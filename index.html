@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Obed Twiringiyimana | IT Professional</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- AOS Animation -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --secondary: #1e40af;
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --gray: #64748b;
+            --accent: #3b82f6;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        /* Header Styles */
+        header {
+            /* background-color: var(--primary); */
+            background-color: var(--dark);
+            color: white;
+            padding: 1rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        header.scrolled {
+            /* background-color: rgba(37, 99, 235, 0.95); */
+            background-color: rgba(0, 0, 0, 0.1);
+
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.1);
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: white;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            /* background: linear-gradient(135deg, var(--primary), var(--secondary)); */
+            background: linear-gradient(135deg, var(--dark), var(--gray));
+            color: white;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 50%);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        .hero-image img {
+            max-width: 350px;
+            border-radius: 50%;
+            border: 5px solid white;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            transition: transform 0.5s ease;
+        }
+
+        .hero-image img:hover {
+            transform: scale(1.05) rotate(5deg);
+        }
+        
+        /* Button Styles */
+        .btn {
+            display: inline-block;
+            background-color: white;
+            color: var(--primary);
+            padding: 0.75rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.5s;
+        }
+        
+        .btn:hover::before {
+            left: 100%;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Section Styles */
+        section {
+            padding: 5rem 2rem;
+            position: relative;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            display: inline-block;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            height: 3px;
+            width: 100px;
+            background-color: var(--primary);
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        /* Project Cards */
+        .project-card {
+            background-color: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            height: 100%;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .project-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .project-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+        
+        .project-image {
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .project-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .project-card:hover .project-image img {
+            transform: scale(1.1);
+        }
+        
+        .project-image::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.3) 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .project-card:hover .project-image::after {
+            opacity: 1;
+        }
+        
+        /* Timeline */
+        .timeline-item {
+            padding: 1.5rem;
+            position: relative;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+        }
+        
+        .timeline-item:hover {
+            transform: translateX(10px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        /* Contact Form */
+        .contact-form {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .form-control {
+            border: 2px solid #e2e8f0;
+            padding: 0.75rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 0.2rem rgba(37, 99, 235, 0.25);
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+        
+        .social-links a {
+            color: white;
+            width: 45px;
+            height: 45px;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            margin: 0 10px;
+        }
+        
+        .social-links a:hover {
+            background-color: var(--primary);
+            transform: translateY(-5px);
+        }
+        
+        /* Contact Info Hover Effects */
+        .info-item a p {
+            transition: all 0.3s ease;
+        }
+        
+        .info-item a:hover p {
+            color: var(--primary) !important;
+            transform: translateX(5px);
+        }
+        
+        .info-icon {
+            transition: all 0.3s ease;
+        }
+        
+        .info-item:hover .info-icon {
+            transform: scale(1.1);
+            background-color: var(--secondary);
+        }
+
+        /* Enhanced Navigation Styles */
+        .navbar {
+            padding: 1rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .navbar.scrolled {
+            padding: 0.5rem 0;
+            /* background-color: rgba(37, 99, 235, 0.95) !important;*/
+            background-color: rgba(0, 0, 0, 0.001) !important;
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+        }
+
+        .navbar-brand {
+            font-size: 1.5rem;
+            font-weight: bold;
+            transition: transform 0.3s ease;
+        }
+
+        .navbar-brand:hover {
+            transform: scale(1.1);
+        }
+
+        .nav-link {
+            position: relative;
+            padding: 0.5rem 1rem !important;
+            margin: 0 0.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 50%;
+            background-color: white;
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%;
+        }
+
+        .navbar-toggler {
+            border: none;
+            padding: 0.5rem;
+        }
+
+        .navbar-toggler:focus {
+            box-shadow: none;
+        }
+
+        @media (max-width: 991.98px) {
+            .navbar-collapse {
+                /* background-color: var(--primary);*/
+                background-color: var(--white);
+                padding: 1rem;
+                border-radius: 10px;
+                margin-top: 1rem;
+            }
+            
+            .nav-link {
+                padding: 0.5rem 1rem !important;
+                margin: 0.5rem 0;
+            }
+            
+            .nav-link::after {
+                display: none;
+            }
+        }
+
+        /* Enhanced Progress Bar Styles */
+        .progress {
+            height: 10px;
+            background-color: #e2e8f0;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            background-color: var(--primary);
+            transition: width 1s ease-in-out;
+        }
+
+        .skill-bar {
+            opacity: 0;
+            transform: translateX(-20px);
+            transition: all 0.5s ease;
+        }
+
+        .skill-bar.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg">
+            <div class="container">
+                <a class="navbar-brand logo text-white" href="index.html">Obed.T</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" title="Toggle navigation menu">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link text-white" href="#home">Home</a></li>
+                        <li class="nav-item"><a class="nav-link text-white" href="#about">About</a></li>
+                        <li class="nav-item"><a class="nav-link text-white" href="#projects">Projects</a></li>
+                        <li class="nav-item"><a class="nav-link text-white" href="#experience">Experience</a></li>
+                        <li class="nav-item"><a class="nav-link text-white" href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6" data-aos="fade-right">
+                    <h1 class="display-4 fw-bold mb-4">TWIRINGIYIMANA OBED</h1>
+                    <p class="lead mb-4">IT Professional | Web Developer | UI/UX Designer</p>
+                    <a href="#contact" class="btn btn-lg">Get In Touch</a>
+                </div>
+                <div class="col-lg-6" data-aos="fade-left">
+                    <div class="hero-image">
+                        <img src="user.JPG" alt="Obed Twiringiyimana" class="img-fluid">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="py-5">
+        <div class="container">
+            <div class="section-title" data-aos="fade-up">
+                <h2>About Me</h2>
+            </div>
+            <div class="row">
+                <div class="col-lg-8" data-aos="fade-right">
+                    <div class="about-text">
+                        <p class="mb-4">I'm an Innovative and Talented IT professional currently pursuing my second year of university. With a passion for technology and problem-solving, I specialize in web development, UI/UX design, and troubleshooting.</p>
+                        <p class="mb-4">My experience at the University of Rwanda has enhanced my technical skills across various domains in information technology. I believe in creating solutions that are not only functional but also user-friendly and visually appealing.</p>
+                        <p class="mb-4">As an Irembo service agent, I've gained valuable experience in providing government services electronically, which has strengthened my customer service skills and understanding of digital transformation in Rwanda.</p>
+                        <div class="mt-4">
+                            <h3>Education</h3>
+                            <p><strong>University of Rwanda</strong> - Bachelor of Science (Hons) in Information Technology (2019-2022)</p>
+                            <p><strong>GS Kabuga High School</strong> - Mathematics, Computer Science, and Economics</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4" data-aos="fade-left">
+                    <div class="skills">
+                        <h3 class="mb-4">Technical Skills</h3>
+                        <div class="skill-bar mb-4">
+                            <div class="d-flex justify-content-between mb-2">
+                                <span>Web Development</span>
+                                <span>90%</span>
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar" style="width: 90%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-bar mb-4">
+                            <div class="d-flex justify-content-between mb-2">
+                                <span>UI/UX Design</span>
+                                <span>85%</span>
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar" style="width: 85%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-bar mb-4">
+                            <div class="d-flex justify-content-between mb-2">
+                                <span>Programming</span>
+                                <span>80%</span>
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar" style="width: 80%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-bar mb-4">
+                            <div class="d-flex justify-content-between mb-2">
+                                <span>Troubleshooting</span>
+                                <span>95%</span>
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar" style="width: 95%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-bar mb-4">
+                            <div class="d-flex justify-content-between mb-2">
+                                <span>Microsoft Office</span>
+                                <span>90%</span>
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar" style="width: 90%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects" class="py-5 bg-light">
+        <div class="container">
+            <div class="section-title" data-aos="fade-up">
+                <h2>My Projects</h2>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="project-card">
+                        <div class="project-image">
+                            <img src="school-logo.png" alt="GSK Project">
+                        </div>
+                        <div class="project-info p-4">
+                            <h3>GSK School Website</h3>
+                            <p>A responsive website for GS Kabuga school showcasing school information, programs, and resources.</p>
+                            <div class="project-tech mb-3">
+                                <span class="badge bg-primary me-2">HTML</span>
+                                <span class="badge bg-primary me-2">CSS</span>
+                                <span class="badge bg-primary">JavaScript</span>
+                            </div>
+                            <div class="project-links">
+                                <a href="https://obed200.github.io/GSK/index.html" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline-primary me-2">
+                                    <i class="fas fa-external-link-alt"></i> Live Demo
+                                </a>
+                                <a href="https://github.com/Obed200/GSK" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline-primary">
+                                    <i class="fab fa-github"></i> GitHub
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="project-card">
+                        <div class="project-image">
+                            <img src="py.png" alt="Python Web App">
+                        </div>
+                        <div class="project-info p-4">
+                            <h3>Python Web Application</h3>
+                            <p>A web application built with Python and hosted on PythonAnywhere, demonstrating backend development skills.</p>
+                            <div class="project-tech mb-3">
+                                <span class="badge bg-primary me-2">Python</span>
+                                <span class="badge bg-primary me-2">Flask</span>
+                                <span class="badge bg-primary">HTML/CSS</span>
+                            </div>
+                            <div class="project-links">
+                                <a href="https://tobed.pythonanywhere.com/" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline-primary me-2">
+                                    <i class="fas fa-external-link-alt"></i> Live Demo
+                                </a>
+                                <a href="https://github.com/Obed200" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline-primary">
+                                    <i class="fab fa-github"></i> GitHub
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="300">
+                    <div class="project-card">
+                        <div class="project-image">
+                            <img src="tobed.jpg" alt="Portfolio Website">
+                        </div>
+                        <div class="project-info p-4">
+                            <h3>Portfolio Website</h3>
+                            <p>My personal portfolio website showcasing my skills, projects, and professional background in IT.</p>
+                            <div class="project-tech mb-3">
+                                <span class="badge bg-primary me-2">HTML</span>
+                                <span class="badge bg-primary me-2">CSS</span>
+                                <span class="badge bg-primary">JavaScript</span>
+                            </div>
+                            <div class="project-links">
+                                <a href="#" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline-primary me-2">
+                                    <i class="fas fa-external-link-alt"></i> Live Demo
+                                </a>
+                                <a href="https://github.com/Obed200" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline-primary">
+                                    <i class="fab fa-github"></i> GitHub
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="experience" class="py-5">
+        <div class="container">
+            <div class="section-title" data-aos="fade-up">
+                <h2>Experience & Certifications</h2>
+            </div>
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <div class="timeline">
+                        <div class="timeline-item" data-aos="fade-right">
+                            <div class="timeline-date">2023 - Present</div>
+                            <h3>Irembo Service Agent</h3>
+                            <p>Responsible for processing applications for government services, reducing processing times and bureaucratic burden on citizens.</p>
+                        </div>
+                        <!-- Repeat for other timeline items -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="py-5 bg-light">
+        <div class="container">
+            <div class="section-title" data-aos="fade-up">
+                <h2>Get In Touch</h2>
+            </div>
+            <div class="row">
+                <div class="col-lg-8" data-aos="fade-right">
+                    <div class="contact-form">
+                        <form id="contactForm">
+                            <div class="mb-3">
+                                <input type="text" name="entry.449788662" class="form-control" placeholder="Your Name" required>
+                            </div>
+                            <div class="mb-3">
+                                <input type="email" name="entry.506498465" class="form-control" placeholder="Your Email" required>
+                            </div>
+                            <div class="mb-3">
+                                <input type="text" name="entry.881704480" class="form-control" placeholder="Subject">
+                            </div>
+                            <div class="mb-3">
+                                <textarea name="entry.1953236908" class="form-control" rows="5" placeholder="Your Message" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Send Message</button>
+                        </form>
+                        <p id="formMessage" style="margin-top: 10px; font-weight: bold;"></p>
+                    </div>
+                </div>
+    
+                <div class="col-lg-4" data-aos="fade-left">
+                    <div class="contact-info">
+                        <div class="info-item mb-4">
+                            <div class="info-icon">
+                                <i class="fas fa-phone"></i>
+                            </div>
+                            <div>
+                                <h3>Phone</h3>
+                                <a href="tel:+250783087106" class="text-decoration-none text-dark">
+                                    <p>+250 783 087 106</p>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="info-item mb-4">
+                            <div class="info-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div>
+                                <h3>Email</h3>
+                                <a href="mailto:obedtwiringiyimana19@gmail.com" class="text-decoration-none text-dark">
+                                    <p>obedtwiringiyimana19@gmail.com</p>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="info-item mb-4">
+                            <div class="info-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div>
+                                <h3>Location</h3>
+                                <p>Nyamirambo, Kigali, Rwanda</p>
+                            </div>
+                        </div>
+                        <div class="info-item mb-4">
+                            <div class="info-icon">
+                                <i class="fab fa-whatsapp"></i>
+                            </div>
+                            <div>
+                                <h3>WhatsApp</h3>
+                                <a href="https://wa.me/250783087106" target="_blank" rel="noopener" class="text-decoration-none text-dark">
+                                    <p>+250 783 087 106</p>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <script>
+        document.getElementById("contactForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // Prevent default form submission
+    
+            var form = event.target;
+            var formData = new FormData(form);
+            var formMessage = document.getElementById("formMessage");
+    
+            fetch("https://docs.google.com/forms/d/e/1FAIpQLScaJm7ADzy1Av2p9GH43mYYQ4bvoCkwDlu8S7lD7u_Q6pySiw/formResponse", {
+                method: "POST",
+                body: formData,
+                mode: "no-cors"
+            })
+            .then(() => {
+                formMessage.style.color = "green";
+                formMessage.textContent = "✅ Your message has been sent successfully!";
+                form.reset(); // Clear the form after successful submission
+            })
+            .catch(() => {
+                formMessage.style.color = "red";
+                formMessage.textContent = "❌ Something went wrong. Please try again!";
+            });
+        });
+    </script>
+    
+
+    <footer class="py-4">
+        <div class="container">
+            <h3 class="mb-3">TWIRINGIYIMANA OBED</h3>
+            <p class="mb-4">IT Professional | Web Developer | UI/UX Designer</p>
+            <div class="social-links mb-4">
+                <a href="https://github.com/Obed200" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i></a>
+                <a href="#" target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#" target="_blank" rel="noopener noreferrer"><i class="fab fa-twitter"></i></a>
+                <a href="#" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i></a>
+            </div>
+            <p class="mb-0">&copy; 2025 Obed Twiringiyimana. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 1000,
+            once: true
+        });
+
+        // Header scroll effect
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Form submission
+        const contactForm = document.getElementById('contactForm');
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Thank you for your message! I will get back to you soon.');
+            contactForm.reset();
+        });
+
+        // Card Animation on Scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.project-card').forEach(card => {
+            observer.observe(card);
+        });
+
+        // Enhanced Navigation Scroll Effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Skills Animation
+        const skillsObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+
+        document.querySelectorAll('.skill-bar').forEach(skill => {
+            skillsObserver.observe(skill);
+        });
+
+        // Active Navigation Link
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (pageYOffset >= sectionTop - 60) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').slice(1) === current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
